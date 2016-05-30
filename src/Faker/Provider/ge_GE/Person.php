@@ -4,6 +4,12 @@ namespace Faker\Provider\ge_GE;
 
 class Person extends \Faker\Provider\Person
 {
+    const ID_OLD = 'OLD';
+    const ID_NEW = 'NEW';
+
+    protected static $georgianLetters = array(
+        'ა','ბ','გ','დ','ე','ვ','ზ','თ','ი','კ','ლ','მ','ნ','ო','პ','ჟ','რ','ს','ტ','უ','ფ','ქ','ღ','ყ','შ','ჩ','ც','ძ','წ','ჭ','ხ','ჯ','ჰ'
+    );
 
     protected static $maleNameFormats = array(
         '{{firstNameMale}} {{lastName}}',
@@ -35,4 +41,23 @@ class Person extends \Faker\Provider\Person
      * @link http://www.behindthename.com/names/gender/feminine/usage/georgian
      */
     protected static $firstNameFemale = array('ბედისა', 'ბედი', 'დარეჯან', 'დარეჯანი', 'ანა', 'ეკა', 'ეკატერინე', 'ელენე', 'ენძელა', 'ელისაბედ', 'ელისო', 'ეთერი', 'ევა', 'გულისა', 'გული', 'გულნაზ', 'იზოლდა', 'ირინა', 'ირინე', 'ქეთევან', 'ქეთი', 'ქეთო', 'ხათუნა', 'ლალი', 'მადონა', 'ლეილა', 'მაყვალა', 'მაყვალი', 'ლია', 'მაია', 'მანანა', 'მარიამ', 'მარიამი', 'მედეა', 'მარინე', 'მარინა', 'მართა', 'მზია', 'მზე', 'ნანა', 'ნანული', 'მერი', 'ნათელა', 'ნათელი', 'ნატალია', 'ნათია', 'ნესტან', 'ნესტანი', 'რუსიკო', 'რუსუდან', 'ნინო', 'რუსუდანი', 'სოფიო', 'თამარ', 'თეკლა', 'თინათინ', 'სინათლე', 'თამარი', 'ტატიანა', 'თინათინი', 'ცისანა', 'ცის', 'ცა', 'ცისია', 'ცის', 'ცა', 'ციური', 'ცა', 'ვარდო', 'ვარდი');
+
+    /**
+     * @link http://www.refworld.org/docid/3ae6accf24.html
+     */
+    public static function personalNo()
+    {
+        return static::numerify('###########');
+    }
+
+    public static function idNumber($type = null)
+    {
+        if (!$type) {
+            $type = static::randomElement(array(static::ID_NEW, static::ID_OLD));
+        }
+        if ($type == static::ID_NEW) {
+            return strtoupper(static::bothify('##??#####'));
+        }
+        return static::randomElement(self::$georgianLetters).static::numerify('#######');
+    }
 }
